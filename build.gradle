@@ -1,0 +1,55 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.RELEASE'
+        log4j2Vesrion='2.11.1'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
+    compile.exclude module: 'logback-classic'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "jacoco"
+
+group = 'com.auth'
+version = '1.0'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
+    compile("org.apache.logging.log4j:log4j-api:${log4j2Vesrion}")
+    compile("org.apache.logging.log4j:log4j-core:${log4j2Vesrion}")
+
+    //compile files('lib/ojdbc7.jar')
+    //compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("commons-io:commons-io:2.5")
+
+    compile("io.jsonwebtoken:jjwt:0.9.0")
+
+    compile('io.springfox:springfox-swagger2:2.7.0')
+    compile('io.springfox:springfox-swagger-ui:2.7.0')
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+test {
+    ignoreFailures = true
+}
